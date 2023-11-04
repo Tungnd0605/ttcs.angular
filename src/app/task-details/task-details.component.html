@@ -1,0 +1,11 @@
+<div *ngIf="isDataAvailable">
+    <div *ngIf="task">
+      <h2>{{ task.title }}</h2>
+      <p>{{ task.description }}</p>
+      <p>Due Date: {{ task.dueDate | date }}</p>
+      <p>Status: {{ task.completed ? 'Completed' : 'Not Completed' }}</p>
+    </div>
+    <div *ngIf="!task">
+      <p>Task not found.</p>
+    </div>
+  </div>
