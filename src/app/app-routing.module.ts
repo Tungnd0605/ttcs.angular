@@ -6,15 +6,22 @@ import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskManagerComponent } from './task-manager/task-manager.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'task-manager', pathMatch: 'full' },
-  { path: 'task-manager', component: TaskManagerComponent },
-  { path: 'task-form', component: TaskFormComponent },
+  {
+    path: 'tasks',
+    children: [
+      { path: '', component: TaskListComponent },
+      { path: 'add', component: TaskFormComponent },
+      { path: 'edit/:id', component: TaskFormComponent }
+    ]
+  },
   { path: 'task-details', component: TaskDetailsComponent },
   { path: 'task-list', component: TaskListComponent },
+  { path: '', component: TaskManagerComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

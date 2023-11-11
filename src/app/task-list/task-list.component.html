@@ -1,7 +1,40 @@
-<h1>Khang vohox</h1>
-<ul>
-    <li *ngFor="let task of tasks">
-      <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
-      <button (click)="deleteTask(task.id)">Delete</button>
-    </li>
-</ul>
+<h1 class="mb-4">Task List</h1>
+
+<div class="d-flex flex-row">
+  <div class="p-2"><a class="btn btn-primary" routerLink="/tasks/add">New Task</a></div>
+</div>
+<hr />
+
+<table class="table" *ngIf="tasks.length !== 0; else emptyTable">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col" class="col-2">Title</th>
+      <th scope="col" class="col-4">Description</th>
+      <th scope="col" class="text-center">Start Date</th>
+      <th scope="col" class="text-center">Due Date</th>
+      <th scope="col" class="text-center">Completed</th>
+      <th scope="col" class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let t of tasks">
+      <td>{{t.id}}</td>
+      <td>{{t.title}}</td>
+      <td>{{t.description}}</td>
+      <td class="text-center">{{t.startedDate | date: 'dd-MM-yyyy'}}</td>
+      <td class="text-center">{{t.dueDate | date: 'dd-MM-yyyy'}}</td>
+      <td class="text-center"><input type="checkbox" [checked]="t.completed" (change)="setCompletion(t)"></td>
+      <td class="text-center"><a routerLink="/tasks/edit/{{t.id}}" class="btn btn-success"><i
+            class="far fa-edit"></i></a>&nbsp;
+        <a (click)="deleteTask(t.id)" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #emptyTable>
+  <div class="alert alert-dark" role="alert">
+    There is no tasks!
+  </div>
+</ng-template>
